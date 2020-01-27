@@ -1,0 +1,58 @@
+.body {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.above-canvas {
+    box-sizing: border-box;
+    display: flex;
+    align-self: center;
+}
+
+.game-canvas-container {
+    box-sizing: border-box;
+    justify-content: center;
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    width: min-content;
+}
+
+.game-canvas {
+    box-sizing: border-box;
+    min-width: 500px;
+    min-height: 500px;
+    width: 600px;
+    height: 600px;
+    border: 1px solid black;
+}
+
+.instructions-container {
+    box-sizing: border-box;
+    width: 100px;
+    border: 1px solid black;
+    border-right: none;
+}
+
+.navlinks-container {
+    box-sizing: border-box;
+    width: 100px;
+    border: 1px solid black;
+    border-left: none;
+}
+
+.title {
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-bottom: none;
+    width: 800px;
+    font-size: 49px;
+    display: flex;
+    justify-content: center;
+}
