@@ -1,32 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="stylesheets/reset.css">
-    <link rel="stylesheet" href="stylesheets/canvas.css">
-    <title>Document</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="stylesheets/reset.css">
+        <link rel="stylesheet" href="stylesheets/canvas.css">
+        <script src="main.js"></script>
 </head>
 <body class="body">
+    <div class="player-buttons">
+        <button class="2">
+            2
+        </button>
+        <button class="3">
+            3
+        </button>
+        <button class="4">
+            4
+        </button>
+    </div>
     <div class="title">yeaight</div>
     <div class="game-canvas-container">
-        <div class="instructions-container">Instructions
+        <div class="instructions-container">
             <ul class="instructions-ul">
+                <li>Intructions</li>
+                <br>
+                <br>
                 <li class="instructions-li">
-                    1. Player win if the whole board is their color
+                    Player wins if the whole board is their color
                 </li>
+                <br>
+                <br>
                 <li>
-                    2. During your turn, select your own territory then attack by selecting a neighboring territory
+                    During your turn, select your own territory then attack by selecting a neighboring territory
                 </li>
+                <br>
+                <br>
                 <li>
-                    3. End your turn whenever
+                    End your turn whenever
+                </li>
+                <br>
+                <br>
+                <li>
+                    Earn more dice by connecting multiple territory
                 </li>
             </ul>
         </div>
-        <canvas class="game-canvas"></canvas>
-        <script src="main.js"></script>
-        <div class="navlinks-container">NavLinks</div>
+        <canvas id="game-canvas4" class="active" width="800" height="800"></canvas>
+        <canvas id="game-canvas3" width="800" height="800"></canvas>
+        <canvas id="game-canvas2" width="800" height="800"></canvas>
+        <div class="navlinks-container">
+            <span class="">
+                    NavLinks
+            </span>
+        </div>
+        <div class="end-button-container">
+            <div class="end-button">End</div>
+        </div>
     </div>
 </body>
 </html>
