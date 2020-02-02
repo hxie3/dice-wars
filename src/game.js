@@ -12,7 +12,7 @@ class Game {
         this.colors.push("transparent");
         this.size = object.size;
         this.ctx = object.ctx
-        this.hexagons = [];
+        this.hexagons = {};
         this.addHexagons(this.size);
         this.endButtonListener();
     }
@@ -21,11 +21,11 @@ class Game {
         return this.players[0];
     }
 
-    // calculateLargestContiguousSum(playerHexagon) {
+    // calculateLargestContiguousSum(player) {
     //     let newpos;
     //     let color = playerHexagon.color;
     //     let result = false;
-    //     // let ownedHexagons = this.hexagons.filter(hexagon => hexagon.color === color);
+    //     let ownedHexagons = this.hexagons.filter(hexagon => hexagon.color === color);
     //     let dirs = [
     //         [(this.hexagons[0].size + (2 * this.hexagons[0].x)), this.hexagons[0].y],
     //         [(this.hexagons[0].size - (2 * this.hexagons[0].x)), this.hexagons[0].y],
@@ -54,8 +54,8 @@ class Game {
     }
 
     allObjects() {
-        let newarr = this.hexagons.slice();
-        return newarr;
+        let arr = Object.values(this.hexagons);
+        return arr;
     }
 
     addPlayers(num) {
@@ -81,7 +81,9 @@ class Game {
                     x,
                     y
                 });
-                this.hexagons.push(hexagon);
+                hexagon.gridx = Math.round((x + 50) / 150);
+                hexagon.gridy = Math.round((y - 100) / twoHeight);
+                this.hexagons[[hexagon.gridx, hexagon.gridy]] = hexagon;
             }
         }
         for (let x = 175; x <= 625; x += 150) {
@@ -93,7 +95,9 @@ class Game {
                     x,
                     y
                 });
-                this.hexagons.push(hexagon);
+                hexagon.gridx = Math.round((x - 25) / -150);
+                hexagon.gridy = (Math.round(((y - 100)) / twoHeight + 0.5))
+                this.hexagons[[hexagon.gridx, hexagon.gridy]] = hexagon;
             }
         }
     }

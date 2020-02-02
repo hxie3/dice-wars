@@ -2,7 +2,9 @@ class Hexagon {
     constructor(object) {
         this.color = object.color
         this.x = object.x;
+        this.gridx = 0;
         this.y = object.y;
+        this.gridy = 0;
         this.size = object.size;
         this.selected = false;
     }
@@ -17,6 +19,25 @@ class Hexagon {
             return true
         }
         return false;
+    }
+
+    findNeighbors() {
+        let pos = [this.gridx, this.gridy];
+        let newpos;
+        let neighbors = []
+        let dirs = [
+            [0, -1],
+            [0, 1],
+            [this.gridx * -2, 0],
+            [this.gridx * -2, 1],
+            [this.gridx * -2 + 1, 0],
+            [this.gridx * -2 + 1, 0]
+        ]
+        dirs.forEach(dir => {
+            newpos = [pos[0]+dir[0], pos[1]+dir[1]];
+            neighbors.push(newpos);
+        })
+        console.log(neighbors);
     }
 
     draw(ctx) {

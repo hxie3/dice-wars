@@ -5,7 +5,6 @@ const Util = require("./util.js")
 class GameView {
     constructor(object){
         this.game = new Game({
-            // hardcoded for now, this will be user input
             size: object.size,
             players: object.players,
             ctx: object.ctx
@@ -29,10 +28,10 @@ class GameView {
                     this.game.draw(this.ctx);
                     hexagonSelected.highlightDraw(this.ctx);
                 } else {
-                    const playerHexagons = this.game.hexagons.filter(hexagon => hexagon.color === this.game.players[0].color)
+                    const playerHexagons = Object.values(this.game.hexagons).filter(hexagon => hexagon.color === this.game.players[0].color)
                     if (playerHexagons.some(hexagon => hexagon.selected) && (hexagonSelected.color !== "transparent")) {
                         const prevHexagon = playerHexagons.filter(hexagon => hexagon.selected)[0]
-                        if (prevHexagon.isNeighbor(hexagonSelected)) {
+                        if (prevHexagon.isNeighbor(hexagonSelected) && (color !== "rgb(0, 0, 0)")) {
                             hexagonSelected.color = this.game.players[0].color;
                         }
                     }
@@ -54,10 +53,10 @@ class GameView {
                     this.game.draw(this.ctx);
                     hexagonSelected.highlightDraw(this.ctx);
                 } else {
-                    const playerHexagons = this.game.hexagons.filter(hexagon => hexagon.color === this.game.players[0].color)
+                    const playerHexagons = Object.values(this.game.hexagons).filter(hexagon => hexagon.color === this.game.players[0].color)
                     if (playerHexagons.some(hexagon => hexagon.selected) && (hexagonSelected.color !== "transparent")) {
                         const prevHexagon = playerHexagons.filter(hexagon => hexagon.selected)[0]
-                        if (prevHexagon.isNeighbor(hexagonSelected)) {
+                        if (prevHexagon.isNeighbor(hexagonSelected) && (color !== "rgb(0, 0, 0)")) {
                             hexagonSelected.color = this.game.players[0].color;
                         }
                     }
@@ -79,10 +78,10 @@ class GameView {
                     this.game.draw(this.ctx);
                     hexagonSelected.highlightDraw(this.ctx);
                 } else {
-                    const playerHexagons = this.game.hexagons.filter(hexagon => hexagon.color === this.game.players[0].color)
+                    const playerHexagons = Object.values(this.game.hexagons).filter(hexagon => hexagon.color === this.game.players[0].color)
                     if (playerHexagons.some(hexagon => hexagon.selected) && (hexagonSelected.color !== "transparent")) {
                         const prevHexagon = playerHexagons.filter(hexagon => hexagon.selected)[0]
-                        if (prevHexagon.isNeighbor(hexagonSelected)) {
+                        if (prevHexagon.isNeighbor(hexagonSelected) && (color !== "rgb(0, 0, 0)")) {
                             hexagonSelected.color = this.game.players[0].color;
                         }
                     }
