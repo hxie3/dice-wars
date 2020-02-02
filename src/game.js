@@ -21,18 +21,24 @@ class Game {
         return this.players[0];
     }
 
-    calculateContiguousSum(player) {
-        let color = player.color;
-        let checkedHexagons = [];
-        let currentPath = [];
-        let largestPath = 0;
-        let ownedHexagons = this.hexagons.filter(hexagon => hexagon.color === color);
-        for(let i = 0; i < ownedHexagons.length; i++) {
-            for(let j = 0; j < ownedHexagons.length; j++) {
-                
-            }
-        }
-    }
+    // calculateLargestContiguousSum(playerHexagon) {
+    //     let newpos;
+    //     let color = playerHexagon.color;
+    //     let result = false;
+    //     // let ownedHexagons = this.hexagons.filter(hexagon => hexagon.color === color);
+    //     let dirs = [
+    //         [(this.hexagons[0].size + (2 * this.hexagons[0].x)), this.hexagons[0].y],
+    //         [(this.hexagons[0].size - (2 * this.hexagons[0].x)), this.hexagons[0].y],
+    //         [(this.hexagons[0].size + (this.hexagons[0].x), (this.hexagons[0].y + Math.sqrt((this.hexagons[0].size * this.hexagons[0].size) - ((this.hexagons[0].size / 2) * (this.hexagons[0].size / 2))) * 2))],
+    //         [(this.hexagons[0].size + (this.hexagons[0].x), (this.hexagons[0].y - Math.sqrt((this.hexagons[0].size * this.hexagons[0].size) - ((this.hexagons[0].size / 2) * (this.hexagons[0].size / 2))) * 2))],
+    //         [(this.hexagons[0].size - (this.hexagons[0].x), (this.hexagons[0].y + Math.sqrt((this.hexagons[0].size * this.hexagons[0].size) - ((this.hexagons[0].size / 2) * (this.hexagons[0].size / 2))) * 2))],
+    //         [(this.hexagons[0].size - (this.hexagons[0].x), (this.hexagons[0].y - Math.sqrt((this.hexagons[0].size * this.hexagons[0].size) - ((this.hexagons[0].size / 2) * (this.hexagons[0].size / 2))) * 2))],
+    //     ]
+    //     dirs.forEach(dir => {
+    //         newpos = (playerHexagon.x + dir[0], playerHexagon.y + dir[1]);
+            
+    //     })
+    // }
 
     endButtonListener() {
         document.getElementsByClassName("end-button")[0].addEventListener("click", (e) => {
