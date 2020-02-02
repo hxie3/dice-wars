@@ -21,24 +21,70 @@ class Game {
         return this.players[0];
     }
 
-    // calculateLargestContiguousSum(player) {
-    //     let newpos;
-    //     let color = playerHexagon.color;
-    //     let result = false;
-    //     let ownedHexagons = this.hexagons.filter(hexagon => hexagon.color === color);
-    //     let dirs = [
-    //         [(this.hexagons[0].size + (2 * this.hexagons[0].x)), this.hexagons[0].y],
-    //         [(this.hexagons[0].size - (2 * this.hexagons[0].x)), this.hexagons[0].y],
-    //         [(this.hexagons[0].size + (this.hexagons[0].x), (this.hexagons[0].y + Math.sqrt((this.hexagons[0].size * this.hexagons[0].size) - ((this.hexagons[0].size / 2) * (this.hexagons[0].size / 2))) * 2))],
-    //         [(this.hexagons[0].size + (this.hexagons[0].x), (this.hexagons[0].y - Math.sqrt((this.hexagons[0].size * this.hexagons[0].size) - ((this.hexagons[0].size / 2) * (this.hexagons[0].size / 2))) * 2))],
-    //         [(this.hexagons[0].size - (this.hexagons[0].x), (this.hexagons[0].y + Math.sqrt((this.hexagons[0].size * this.hexagons[0].size) - ((this.hexagons[0].size / 2) * (this.hexagons[0].size / 2))) * 2))],
-    //         [(this.hexagons[0].size - (this.hexagons[0].x), (this.hexagons[0].y - Math.sqrt((this.hexagons[0].size * this.hexagons[0].size) - ((this.hexagons[0].size / 2) * (this.hexagons[0].size / 2))) * 2))],
-    //     ]
-    //     dirs.forEach(dir => {
-    //         newpos = (playerHexagon.x + dir[0], playerHexagon.y + dir[1]);
-            
-    //     })
-    // }
+    ensureNoHoles() {
+        let neighborHexagon;
+        let currSum;
+        let countedHexagons = [];
+        let currPath;
+        let result = true;
+        Object.values(this.hexagons).slice(0,1).forEach(hexagon => {
+            currSum = 1;
+            if (countedHexagons.includes(hexagon)) {
+                return
+            }
+            currPath = [hexagon]
+            countedHexagons.push(hexagon);
+            while (currPath.length > 0) {
+                currPath.shift().findNeighbors().forEach(pos => {
+                    neighborHexagon = this.hexagons[pos];
+                    if (neighborHexagon === undefined) return;
+                    if (!(countedHexagons.includes(neighborHexagon))) {
+                        countedHexagons.push(neighborHexagon);
+                        currSum += 1;
+                        if (neighborHexagon.color === "transparent") return
+                        currPath.push(neighborHexagon);
+                    }
+                })
+            }
+            if (currSum !== Object.values(this.hexagons).length){
+                result = false;
+            }
+        })
+        return result;
+    }
+
+    calculateLargestContiguousSum(player) {
+        let neighborHexagon;
+        let largestSum = 1;
+        let currSum;
+        let countedHexagons = [];
+        let currPath;
+        let color = player.color;
+        let ownedHexagons = Object.values(this.hexagons).filter(hexagon => hexagon.color === color);
+        ownedHexagons.forEach(hexagon => {
+            currSum = 1;
+            if (countedHexagons.includes(hexagon)) {
+                return
+            }
+            currPath = [hexagon]
+            countedHexagons.push(hexagon);
+            while (currPath.length > 0) {
+                currPath.shift().findNeighbors().forEach(pos => { 
+                    neighborHexagon = this.hexagons[pos];
+                    if (neighborHexagon === undefined) return;
+                    if ((neighborHexagon.color === hexagon.color) && (!(countedHexagons.includes(neighborHexagon)))) {
+                        countedHexagons.push(neighborHexagon);
+                        currPath.push(neighborHexagon);
+                        currSum += 1;
+                    }
+                })
+                if (currSum > largestSum) {
+                    largestSum = currSum;
+                }
+            }
+        })
+        return largestSum;
+    }
 
     endButtonListener() {
         document.getElementsByClassName("end-button")[0].addEventListener("click", (e) => {
@@ -70,11 +116,7 @@ class Game {
         let twoHeight = Math.sqrt((size * size) - ((size / 2) * (size / 2))) * 2;
         for(let x = 100; x <= 700; x += 150) {
             for(let y = 100 + twoHeight; y <= 750; y += twoHeight) {
-                if (x === 100 || y === 100 || x === 700) {
-                    color = this.colors[Math.floor(Math.random() * (this.colors.length - 1))];
-                } else {
-                    color = this.colors[Math.floor(Math.random() * this.colors.length)];
-                }
+                color = this.colors[Math.floor(Math.random() * this.colors.length)];
                 hexagon = new Hexagon({
                     size,
                     color,
@@ -99,6 +141,10 @@ class Game {
                 hexagon.gridy = (Math.round(((y - 100)) / twoHeight + 0.5))
                 this.hexagons[[hexagon.gridx, hexagon.gridy]] = hexagon;
             }
+        }
+        if (!(this.ensureNoHoles())) {
+            this.hexagons = {};
+            this.addHexagons(size);
         }
     }
 

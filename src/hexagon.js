@@ -25,19 +25,31 @@ class Hexagon {
         let pos = [this.gridx, this.gridy];
         let newpos;
         let neighbors = []
-        let dirs = [
-            [0, -1],
-            [0, 1],
-            [this.gridx * -2, 0],
-            [this.gridx * -2, 1],
-            [this.gridx * -2 + 1, 0],
-            [this.gridx * -2 + 1, 0]
-        ]
+        let dirs;
+        if (this.gridx > 0) {
+            dirs = [
+                [0, -1],
+                [0, 1],
+                [this.gridx * -2, 0],
+                [this.gridx * -2, 1],
+                [this.gridx * -2 + 1, 0],
+                [this.gridx * -2 + 1, 1]
+            ]
+        } else {
+            dirs = [
+                [0, -1],
+                [0, 1],
+                [this.gridx * -2, -1],
+                [this.gridx * -2, 0],
+                [this.gridx * -2 + 1, -1],
+                [this.gridx * -2 + 1, 0]
+            ]
+        }
         dirs.forEach(dir => {
             newpos = [pos[0]+dir[0], pos[1]+dir[1]];
             neighbors.push(newpos);
         })
-        console.log(neighbors);
+        return neighbors;
     }
 
     draw(ctx) {
