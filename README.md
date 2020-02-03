@@ -13,7 +13,8 @@ Technology/Languages/API/Plugins:
 
 Technical Implementation: 
 In order to increase the game's replayability, I randomized the board. However, this creates a problem. If the board splits into two pieces, it becomes impossible to win if the islands are taken over by different colors. To fix this, I implemented a helper function that checks if the board is valid.
-`
+
+```javascript
 ensureNoHoles() {
         let neighborHexagon;
         let currSum;
@@ -45,4 +46,4 @@ ensureNoHoles() {
         })
         return result;
     }
-   `
+   ```
