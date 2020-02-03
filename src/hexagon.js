@@ -1,3 +1,5 @@
+const Dice = require("./dice.js")
+
 class Hexagon {
     constructor(object) {
         this.color = object.color
@@ -7,18 +9,26 @@ class Hexagon {
         this.gridy = 0;
         this.size = object.size;
         this.selected = false;
+        this.dices = [new Dice()];
+        this.numOfDice = this.dices.length;
     }
 
     isNeighbor(hexagon) {
-        const xUpperRange = this.x + (2 * this.size);
-        const xLowerRange = this.x - (2 * this.size);
-        const twoHeight = Math.sqrt((this.size * this.size) - ((this.size / 2) * (this.size / 2))) * 2;
-        const yUpperRange = this.y + twoHeight;
-        const yLowerRange = this.y - twoHeight;
-        if ((xUpperRange >= hexagon.x) && (xLowerRange <= hexagon.x) && (yUpperRange >= hexagon.y) && (yLowerRange <= hexagon.y)){
-            return true
-        }
-        return false;
+        let result = false;
+        let pos = [hexagon.gridx, hexagon.gridy];
+        let neighbors = this.findNeighbors();
+        neighbors.forEach(neighbor => {
+            if (neighbor[0] === pos[0] && neighbor[1] === pos[1]) result = true;
+        })
+        return result
+    }
+
+    rollDice() {
+        let sum = 0;
+        this.dices.forEach(dice => {
+            sum += dice.randomValue();
+        })
+        return sum;
     }
 
     findNeighbors() {
@@ -62,6 +72,12 @@ class Hexagon {
 
         ctx.fillStyle = this.color;
         ctx.fill();
+        if (this.color === "transparent") return;
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.numOfDice}`, `${this.x}`, `${this.y-10}`);
     }
 
     highlightDraw(ctx) {
@@ -78,6 +94,13 @@ class Hexagon {
         ctx.lineWidth = 5;
         ctx.strokeStyle = "green";
         ctx.stroke();
+        if (this.color === "transparent") return;
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+
+        ctx.fillText(`${this.numOfDice}`, `${this.x}`, `${this.y-10}`);
     }
 }
 

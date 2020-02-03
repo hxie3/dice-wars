@@ -1,5 +1,6 @@
 const Hexagon = require("./hexagon.js");
 const Player = require("./player.js");
+const Dice = require("./dice.js");
 const DIM_X = 1000;
 const DIM_Y = 1000;
 const COLORS = ["rgb(237, 52, 86)", "rgb(255, 246, 137)", "rgb(88, 53, 94)", "rgb(122, 231, 199)"];
@@ -88,6 +89,17 @@ class Game {
 
     endButtonListener() {
         document.getElementsByClassName("end-button")[0].addEventListener("click", (e) => {
+            let numOfDice = this.calculateLargestContiguousSum(this.currentPlayer());
+            let ownedHexagons = Object.values(this.hexagons).filter(hexagon => hexagon.color === this.currentPlayer().color && hexagon.dices.length < 10);
+            let randomHexagon;
+            while (numOfDice > 0 && ownedHexagons.length !== 0) {
+                ownedHexagons = ownedHexagons.filter(hexagon => hexagon.dices.length < 10);
+                randomHexagon = ownedHexagons[Math.floor(Math.random() * ownedHexagons.length)]
+                if (randomHexagon === undefined) return
+                randomHexagon.dices.push(new Dice());
+                randomHexagon.numOfDice += 1;
+                numOfDice -= 1;
+            }
             this.nextPlayer();
             this.draw(this.ctx);
         })
