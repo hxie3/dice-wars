@@ -89,20 +89,31 @@ class Game {
 
     endButtonListener() {
         document.getElementsByClassName("end-button")[0].addEventListener("click", (e) => {
-            let numOfDice = this.calculateLargestContiguousSum(this.currentPlayer());
+            let numOfDiceToAdd = this.calculateLargestContiguousSum(this.currentPlayer());
             let ownedHexagons = Object.values(this.hexagons).filter(hexagon => hexagon.color === this.currentPlayer().color && hexagon.dices.length < 10);
             let randomHexagon;
-            while (numOfDice > 0 && ownedHexagons.length !== 0) {
+            while (numOfDiceToAdd > 0 && ownedHexagons.length !== 0) {
                 ownedHexagons = ownedHexagons.filter(hexagon => hexagon.dices.length < 10);
                 randomHexagon = ownedHexagons[Math.floor(Math.random() * ownedHexagons.length)]
                 if (randomHexagon === undefined) return
                 randomHexagon.dices.push(new Dice());
                 randomHexagon.numOfDice += 1;
-                numOfDice -= 1;
+                numOfDiceToAdd -= 1;
             }
+            this.checkForElimination();
             this.nextPlayer();
             this.draw(this.ctx);
         })
+    }
+
+    checkForElimination() {
+        let newPlayers = [];
+        this.players.forEach((player) => {
+            if(this.calculateLargestContiguousSum(player) !== 0) {
+                newPlayers.push(player)
+            }
+        })
+        this.players = newPlayers;
     }
 
     nextPlayer() {

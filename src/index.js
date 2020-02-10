@@ -5,7 +5,7 @@ const Util = require("./util.js");
 
 window.addEventListener('DOMContentLoaded', (event) => {
     let canvas; 
-    document.getElementsByClassName("2")[0].addEventListener("click", (event) => {
+    document.getElementsByClassName("two")[0].addEventListener("click", (event) => {
         document.getElementsByClassName("player-buttons")[0].classList.add("hidden");
         canvas = document.getElementById('game-canvas2')
         document.getElementById('game-canvas3').classList.remove("active")
@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         });
         gameview.start(2);
     })
-    document.getElementsByClassName("3")[0].addEventListener("click", (event) => {
+    document.getElementsByClassName("three")[0].addEventListener("click", (event) => {
         document.getElementsByClassName("player-buttons")[0].classList.add("hidden");
         canvas = document.getElementById('game-canvas3')
         document.getElementById('game-canvas2').classList.remove("active")
@@ -33,8 +33,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
         });
         gameview.start(3);
     })
-    document.getElementsByClassName("4")[0].addEventListener("click", (event) => {
-        document.getElementsByClassName("player-buttons")[0].classList.add("hidden");
+    document.getElementsByClassName("four")[0].addEventListener("click", (event) => {
+        // document.getElementsByClassName("player-buttons")[0].classList.add("hidden");
         canvas = document.getElementById('game-canvas4')
         document.getElementById('game-canvas2').classList.remove("active")
         document.getElementById('game-canvas3').classList.remove("active")
