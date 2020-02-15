@@ -34,7 +34,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         gameview.start(3);
     })
     document.getElementsByClassName("four")[0].addEventListener("click", (event) => {
-        // document.getElementsByClassName("player-buttons")[0].classList.add("hidden");
+        document.getElementsByClassName("player-buttons")[0].classList.add("hidden");
         canvas = document.getElementById('game-canvas4')
         document.getElementById('game-canvas2').classList.remove("active")
         document.getElementById('game-canvas3').classList.remove("active")

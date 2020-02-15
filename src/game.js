@@ -28,25 +28,38 @@ class Game {
         let countedHexagons = [];
         let currPath;
         let result = true;
+        // grabs first hexagon
         Object.values(this.hexagons).slice(0,1).forEach(hexagon => {
             currSum = 1;
+            // if hexagon was already accounted for, skip it
             if (countedHexagons.includes(hexagon)) {
                 return
             }
-            currPath = [hexagon]
+            // updates hexagons accounted for, for each hexagon that makes it through
             countedHexagons.push(hexagon);
+            // continuously shift out hexagons and push in new hexagons to check neighbors for
+            currPath = [hexagon]
+            // if theres still hexagons to check neighbors for, run code
             while (currPath.length > 0) {
+                // take out the first hexagon, get all positions of its neighbor, and loop through them all
                 currPath.shift().findNeighbors().forEach(pos => {
+                    // use position to find specific hexagon
                     neighborHexagon = this.hexagons[pos];
+                    // if the position is out of bounds, go to the next position
                     if (neighborHexagon === undefined) return;
+                    // if its a valid hexagon, check if its already accounted for, if not, move on
                     if (!(countedHexagons.includes(neighborHexagon))) {
+                        // updates accounted hexagons
                         countedHexagons.push(neighborHexagon);
+                        // total hexagons update
                         currSum += 1;
+                        // if hexagon is transparent, dont add to array to check its hexagons, its a barrier
                         if (neighborHexagon.color === "transparent") return
                         currPath.push(neighborHexagon);
                     }
                 })
             }
+            // check total connected hexagons with all hexagons
             if (currSum !== Object.values(this.hexagons).length){
                 result = false;
             }
