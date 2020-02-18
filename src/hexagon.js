@@ -102,6 +102,43 @@ class Hexagon {
 
         ctx.fillText(`${this.numOfDice}`, `${this.x}`, `${this.y-10}`);
     }
+
+    attack(otherHexagon) {
+        if (this.numOfDice === 1) {
+            return
+        }
+        let sum = this.rollDice();
+        let otherSum = otherHexagon.rollDice();
+        if (sum > otherSum) {
+            let promise = document.getElementsByClassName("success")[0].cloneNode(true).play();
+            if (typeof promise !== undefined) {
+                promise.then(() => {
+                    
+                }).catch(() => {
+
+                });
+            }
+            otherHexagon.color = this.color
+            otherHexagon.numOfDice = this.numOfDice - 1;
+            this.numOfDice = 1;
+            this.dices = [new Dice()]
+            otherHexagon.dices = [];
+            while(otherHexagon.dices.length !== otherHexagon.numOfDice) {
+                otherHexagon.dices.push(new Dice());
+            }
+        } else {
+            let promise = document.getElementsByClassName("fail")[0].cloneNode(true).play();
+            if (typeof promise !== undefined) {
+                promise.then(() => {
+                    
+                }).catch(() => {
+
+                });
+            }
+            this.numOfDice = 1;
+            this.dices = [new Dice()];
+        }
+    }
 }
 
 module.exports = Hexagon;

@@ -69,14 +69,14 @@ class Game {
 
     calculateLargestContiguousSum(player) {
         let neighborHexagon;
-        let largestSum = 1;
+        let largestSum = 0;
         let currSum;
         let countedHexagons = [];
         let currPath;
         let color = player.color;
-        let ownedHexagons = Object.values(this.hexagons).filter(hexagon => hexagon.color === color);
+        let ownedHexagons = Object.values(this.hexagons).filter(hexagon => hexagon.color === color);                
         ownedHexagons.forEach(hexagon => {
-            currSum = 1;
+            currSum = 1;    
             if (countedHexagons.includes(hexagon)) {
                 return
             }
@@ -113,10 +113,13 @@ class Game {
                 randomHexagon.numOfDice += 1;
                 numOfDiceToAdd -= 1;
             }
-            this.checkForElimination();
             this.nextPlayer();
-            this.draw(this.ctx);
+            this.draw(this.ctx)
         })
+    }
+
+    clearSelected() {
+        Object.values(this.hexagons).forEach(hexagon => hexagon.selected = false)
     }
 
     checkForElimination() {
@@ -253,6 +256,11 @@ class Game {
         ctx.lineTo(350, 75);
         ctx.fillStyle = this.players[1].color;
         ctx.fill();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[1])}`, `${375}`, `${50 - 10}`);
 
         ctx.moveTo(300, 25)
         ctx.beginPath();
@@ -266,6 +274,11 @@ class Game {
         ctx.lineWidth = 5;
         ctx.strokeStyle = "green";
         ctx.stroke();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[0])}`, `${325}`, `${50 - 10}`);
 
         ctx.moveTo(400, 25)
         ctx.beginPath();
@@ -275,6 +288,11 @@ class Game {
         ctx.lineTo(400, 25);
         ctx.fillStyle = this.players[2].color;
         ctx.fill();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[2])}`, `${425}`, `${50 - 10}`);
 
         ctx.moveTo(450, 25)
         ctx.beginPath();
@@ -284,6 +302,11 @@ class Game {
         ctx.lineTo(450, 25);
         ctx.fillStyle = this.players[3].color;
         ctx.fill();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[3])}`, `${475}`, `${50 - 10}`);
     }
 
     draw(ctx) {
@@ -295,8 +318,26 @@ class Game {
             this.drawTwo(ctx);
         } else if (this.players.length === 3) {
             this.drawThree(ctx);
-        } else {
+        } else if (this.players.length === 4) {
             this.drawFour(ctx);
+        }
+    }
+
+    win(player) {
+        let color;
+        if (player.color === "rgb(237, 52, 86)") {
+            color = "Red";
+        } else if (player.color === "rgb(255, 246, 137)") {
+            color = "Yellow";
+        } else if (player.color === "rgb(88, 53, 94)") {
+            color = "Purple";
+        } else {
+            color = "Blue";
+        }
+        if(alert(`${color} wins! Play again?`)) {
+            // window.location.reload();
+        } else {
+            window.location.reload();
         }
     }
 }

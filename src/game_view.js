@@ -9,6 +9,8 @@ class GameView {
             players: object.players,
             ctx: object.ctx
         });
+        this.size = object.size;
+        this.players = object.players
         this.ctx = object.ctx;
     }
 
@@ -32,7 +34,13 @@ class GameView {
                     if (playerHexagons.some(hexagon => hexagon.selected) && (hexagonSelected.color !== "transparent")) {
                         const prevHexagon = playerHexagons.filter(hexagon => hexagon.selected)[0]
                         if (prevHexagon.isNeighbor(hexagonSelected) && (color !== "rgb(0, 0, 0)")) {
+                            // if (this.game.attack())
                             hexagonSelected.color = this.game.players[0].color;
+                            this.game.checkForElimination();
+                            this.game.draw(this.ctx)
+                            if (this.game.players.length === 1) {
+                                setTimeout(() => this.game.win(this.game.players[0]), 50);
+                            }
                         }
                     }
                     playerHexagons.forEach(hexagon => hexagon.selected = false);
@@ -58,6 +66,11 @@ class GameView {
                         const prevHexagon = playerHexagons.filter(hexagon => hexagon.selected)[0]
                         if (prevHexagon.isNeighbor(hexagonSelected) && (color !== "rgb(0, 0, 0)")) {
                             hexagonSelected.color = this.game.players[0].color;
+                            this.game.checkForElimination();
+                            this.game.draw(this.ctx)
+                            if (this.game.players.length === 1) {
+                                setTimeout(() => this.game.win(this.game.players[0]), 50);
+                            }
                         }
                     }
                     playerHexagons.forEach(hexagon => hexagon.selected = false);
@@ -76,13 +89,20 @@ class GameView {
                 const hexagonSelected = Util.closestHexagon(this.game.hexagons, mousePos);
                 if (!(mousePos.x >= 300 && mousePos.x <= 350 && mousePos.y >= 25 && mousePos.y <= 75) && this.game.currentPlayer().color === color) {
                     this.game.draw(this.ctx);
+                    this.game.clearSelected();
                     hexagonSelected.highlightDraw(this.ctx);
                 } else {
                     const playerHexagons = Object.values(this.game.hexagons).filter(hexagon => hexagon.color === this.game.players[0].color)
                     if (playerHexagons.some(hexagon => hexagon.selected) && (hexagonSelected.color !== "transparent")) {
                         const prevHexagon = playerHexagons.filter(hexagon => hexagon.selected)[0]
                         if (prevHexagon.isNeighbor(hexagonSelected) && (color !== "rgb(0, 0, 0)")) {
-                            hexagonSelected.color = this.game.players[0].color;
+                            prevHexagon.attack(hexagonSelected)
+                            // hexagonSelected.color = this.game.players[0].color;
+                            this.game.checkForElimination();
+                            this.game.draw(this.ctx)
+                            if (this.game.players.length === 1) {
+                                setTimeout(() => this.game.win(this.game.players[0]), 50);
+                            }
                         }
                     }
                     playerHexagons.forEach(hexagon => hexagon.selected = false);
@@ -90,6 +110,14 @@ class GameView {
                 }
             })
         }
+    }
+
+    reset() {
+        this.game = new Game({
+            size: this.size,
+            players: this.players,
+            ctx: this.ctx
+        });
     }
 
     bindKeyHandlers() {
