@@ -1,5 +1,4 @@
 const Game = require("./game.js");
-const Hexagon = require("./hexagon.js");
 const Util = require("./util.js")
 
 class GameView {
@@ -34,8 +33,7 @@ class GameView {
                     if (playerHexagons.some(hexagon => hexagon.selected) && (hexagonSelected.color !== "transparent")) {
                         const prevHexagon = playerHexagons.filter(hexagon => hexagon.selected)[0]
                         if (prevHexagon.isNeighbor(hexagonSelected) && (color !== "rgb(0, 0, 0)")) {
-                            // if (this.game.attack())
-                            hexagonSelected.color = this.game.players[0].color;
+                            prevHexagon.attack(hexagonSelected)
                             this.game.checkForElimination();
                             this.game.draw(this.ctx)
                             if (this.game.players.length === 1) {
@@ -65,7 +63,7 @@ class GameView {
                     if (playerHexagons.some(hexagon => hexagon.selected) && (hexagonSelected.color !== "transparent")) {
                         const prevHexagon = playerHexagons.filter(hexagon => hexagon.selected)[0]
                         if (prevHexagon.isNeighbor(hexagonSelected) && (color !== "rgb(0, 0, 0)")) {
-                            hexagonSelected.color = this.game.players[0].color;
+                            prevHexagon.attack(hexagonSelected)
                             this.game.checkForElimination();
                             this.game.draw(this.ctx)
                             if (this.game.players.length === 1) {
@@ -97,7 +95,6 @@ class GameView {
                         const prevHexagon = playerHexagons.filter(hexagon => hexagon.selected)[0]
                         if (prevHexagon.isNeighbor(hexagonSelected) && (color !== "rgb(0, 0, 0)")) {
                             prevHexagon.attack(hexagonSelected)
-                            // hexagonSelected.color = this.game.players[0].color;
                             this.game.checkForElimination();
                             this.game.draw(this.ctx)
                             if (this.game.players.length === 1) {
@@ -118,14 +115,6 @@ class GameView {
             players: this.players,
             ctx: this.ctx
         });
-    }
-
-    bindKeyHandlers() {
-        // key("w", () => {
-        //     this.game.ship.power([0, -0.025]);
-        // });
-
-        // Add click event here
     }
 }
 
