@@ -23,10 +23,17 @@ class Hexagon {
         return result
     }
 
-    rollDice() {
+    rollDice(str) {
         let sum = 0;
-        this.dices.forEach(dice => {
-            sum += dice.randomValue();
+        let randomValue;
+        let htmlElement;
+        let diceRollElement;
+        this.dices.forEach((dice, idx) => {
+            randomValue = dice.randomValue();
+            htmlElement = document.getElementsByClassName(`${str}-dice-${idx.toString()}`)[0];
+            diceRollElement = document.getElementsByClassName(`${randomValue.toString()}`)[0].cloneNode(true);
+            htmlElement.appendChild(diceRollElement);
+            sum += randomValue;
         })
         return sum;
     }
@@ -107,8 +114,11 @@ class Hexagon {
         if (this.numOfDice === 1) {
             return
         }
-        let sum = this.rollDice();
-        let otherSum = otherHexagon.rollDice();
+        this.clearAttackerDefender();
+        let sum = this.rollDice("attacker");
+        let otherSum = otherHexagon.rollDice("defender");
+        document.getElementsByClassName("sum")[0].innerHTML = sum;
+        document.getElementsByClassName("sum")[1].innerHTML = otherSum;
         if (sum > otherSum) {
             let promise = document.getElementsByClassName("success")[0].cloneNode(true).play();
             if (typeof promise !== undefined) {
@@ -137,6 +147,20 @@ class Hexagon {
             }
             this.numOfDice = 1;
             this.dices = [new Dice()];
+        }
+    }
+
+    clearAttackerDefender() {
+        let htmlElement;
+        let str = "attacker";
+        for(let i = 0; i <= 9; i++) {
+            htmlElement = document.getElementsByClassName(`${str}-dice-${i.toString()}`)[0];
+            htmlElement.innerHTML = ''
+        }
+        str = "defender";
+        for (let j = 0; j <= 9; j++) {
+            htmlElement = document.getElementsByClassName(`${str}-dice-${j.toString()}`)[0];
+            htmlElement.innerHTML = ''
         }
     }
 }

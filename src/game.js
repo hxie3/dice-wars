@@ -200,6 +200,11 @@ class Game {
         ctx.lineWidth = 5;
         ctx.strokeStyle = "green";
         ctx.stroke();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[0])}`, `${375}`, `${50 - 10}`);
 
         ctx.moveTo(400, 25)
         ctx.beginPath();
@@ -209,7 +214,11 @@ class Game {
         ctx.lineTo(400, 25);
         ctx.fillStyle = this.players[1].color;
         ctx.fill();
-
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[1])}`, `${425}`, `${50 - 10}`);
     }
 
     drawThree(ctx) {
@@ -222,6 +231,11 @@ class Game {
         ctx.lineTo(375, 75);
         ctx.fillStyle = this.players[1].color;
         ctx.fill();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[1])}`, `${400}`, `${50 - 10}`);
 
         ctx.moveTo(325, 25)
         ctx.beginPath();
@@ -235,6 +249,11 @@ class Game {
         ctx.lineWidth = 5;
         ctx.strokeStyle = "green";
         ctx.stroke();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[0])}`, `${350}`, `${50 - 10}`);
 
         ctx.moveTo(425, 25)
         ctx.beginPath();
@@ -244,6 +263,11 @@ class Game {
         ctx.lineTo(425, 25);
         ctx.fillStyle = this.players[2].color;
         ctx.fill();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[2])}`, `${450}`, `${50 - 10}`);
     }
 
     drawFour(ctx) {
