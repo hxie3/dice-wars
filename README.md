@@ -43,9 +43,14 @@ ensureNoHoles() {
                         })
                 }
                 if (currSum !== Object.values(this.hexagons).length){
-                result = false;
+                        result = false;
                 }
         })
         return result;
 }
 ```
+`this.hexagons` is an object with keys of position arrays pointing to hexagon objects. `Object.values(this.hexagons).slice(0,1).forEach` uses one hexagon to start the root of a tree.
+`currPath` is initialized with the single hexagon and behaves as a queue that will push in neighboring hexagons through `currPath.shift().findNeighbors().forEach(pos => {` while taking out the current hexagon. An array of checked hexagons is making sure hexagons are not counted twice. At the very end, `currSum` is compared with `this.hexagons` to see if each hexagon is reachable from the root. If not, `this.hexagons` randomizes to another board state in a loop until `ensureNoHoles` returns true.
+
+Future Features:
+- Single Player playing against A.I.
