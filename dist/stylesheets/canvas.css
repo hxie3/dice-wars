@@ -171,14 +171,21 @@
     align-items: center;
 }
 
-svg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-}
-
 .sum {
     font-size: 30px;
+}
+
+.icons {
+    width: 46px;
+    height: 46px;
+    margin: 10px;
+}
+
+.links {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
 }

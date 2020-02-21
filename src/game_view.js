@@ -35,6 +35,11 @@ class GameView {
             };
             const pixel = this.ctx.getImageData(mousePos.x, mousePos.y, 1, 1).data;
             const color = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+            if (color === `rgb(0, 0, 0)`) {
+                this.game.draw(this.ctx);
+                this.game.clearSelected();
+                return
+            }
             const hexagonSelected = Util.closestHexagon(this.game.hexagons, mousePos);
             if (!(mousePos.x >= border1 && mousePos.x <= border2 && mousePos.y >= 25 && mousePos.y <= 75) && this.game.currentPlayer().color === hexagonSelected.color) {
                 this.game.draw(this.ctx);

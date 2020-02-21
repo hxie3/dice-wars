@@ -95,3 +95,15 @@ input[type="submit"] {
 
 button:focus {outline:0;}
 input:focus {outline:0;}
+
+a {
+    color: black;
+}
+
+a:visited {
+    color: inherit;
+}
+
+a:hover {
+    opacity: 50%;
+}
