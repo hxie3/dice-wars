@@ -9,8 +9,15 @@ class Hexagon {
         this.gridy = 0;
         this.size = object.size;
         this.selected = false;
-        this.dices = [new Dice()];
+        this.dices = [];
+        this.pushRandomDice();
         this.numOfDice = this.dices.length;
+    }
+
+    pushRandomDice() {
+        for(let i = Math.floor(Math.random() * 4 + 1); i > 0; i--) {
+            this.dices.push(new Dice());
+        }
     }
 
     isNeighbor(hexagon) {
@@ -28,6 +35,7 @@ class Hexagon {
         let randomValue;
         let htmlElement;
         let diceRollElement;
+        document.getElementsByClassName(str)[0].style.backgroundColor = `${this.color}`;
         this.dices.forEach((dice, idx) => {
             randomValue = dice.randomValue();
             htmlElement = document.getElementsByClassName(`${str}-dice-${idx.toString()}`)[0];
@@ -111,6 +119,7 @@ class Hexagon {
     }
 
     attack(otherHexagon) {
+        if (this.color === otherHexagon.color) return
         if (this.numOfDice === 1) {
             return
         }

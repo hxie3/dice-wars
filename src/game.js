@@ -358,9 +358,7 @@ class Game {
         } else {
             color = "Blue";
         }
-        if(alert(`${color} wins! Play again?`)) {
-            // window.location.reload();
-        } else {
+        if(!alert(`${color} wins! Play again?`)) {
             window.location.reload();
         }
     }

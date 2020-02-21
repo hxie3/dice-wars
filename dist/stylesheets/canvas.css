@@ -24,37 +24,7 @@
     width: min-content;
 }
 
-#game-canvas4 {
-    display: none;
-    /* background-image: url("riskBackground.jpg"); */
-    background-color: black;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    box-sizing: border-box;
-    min-width: 800px;
-    min-height: 800px;
-    width: 800px;
-    height: 800px;
-    border: 1px solid black;
-}
-
-#game-canvas3 {
-    display: none;
-    /* background-image: url("riskBackground.jpg"); */
-    background-color: black;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    box-sizing: border-box;
-    min-width: 800px;
-    min-height: 800px;
-    width: 800px;
-    height: 800px;
-    border: 1px solid black;
-}
-
-#game-canvas2 {
+#game-canvas {
     display: none;
     /* background-image: url("riskBackground.jpg"); */
     background-color: black;
@@ -141,7 +111,7 @@
     background-color: white;
     position: relative;
     left: 145px;
-    bottom: 375px;
+    bottom: 468px;
     padding: 5px;
     width: 250px;
     height: 75px;
@@ -154,7 +124,7 @@
     background-color: white;
     position: relative;
     left: 673px;
-    bottom: 460px;
+    bottom: 553px;
     padding: 5px;
     width: 250px;
     height: 75px;

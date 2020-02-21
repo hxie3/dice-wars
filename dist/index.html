@@ -38,22 +38,32 @@
                 <br>
                 <br>
                 <li class="instructions-li">
-                    Player wins if the whole board is their color
+                    Player take turns attacking adjacent territory
                 </li>
                 <br>
                 <br>
                 <li>
-                    During your turn, select your own territory then attack by selecting a neighboring territory
+                    # inside hexagon = # of dice
                 </li>
                 <br>
                 <br>
                 <li>
-                    End your turn whenever
+                    # inside square = Highest # of connected tiles
                 </li>
                 <br>
                 <br>
                 <li>
-                    Earn more dice by connecting multiple territory
+                    End turn whenever
+                </li>
+                <br>
+                <br>
+                <li>
+                    Additional dice equal to # of connected tiles is randomly added when ending
+                </li>
+                <br>
+                <br>
+                <li>
+                    Win by controlling the whole board
                 </li>
             </ul>
             <div class="hidden">
@@ -139,13 +149,7 @@
                 </div>
             </div>
         </div>
-        <canvas id="game-canvas4" class="active" width="800" height="800"></canvas>
-        <canvas id="game-canvas3" width="800" height="800">
-
-        </canvas>
-        <canvas id="game-canvas2" width="800" height="800">
-            
-        </canvas>
+        <canvas id="game-canvas" class="active" width="800" height="800"></canvas>
         <div class="navlinks-container">
             <span class="">
                     NavLinks
