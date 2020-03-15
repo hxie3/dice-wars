@@ -123,6 +123,8 @@ class Hexagon {
         if (this.numOfDice === 1) {
             return
         }
+        document.getElementsByClassName("attacker")[0].classList.remove("hidden");
+        document.getElementsByClassName("defender")[0].classList.remove("hidden");
         this.clearAttackerDefender();
         let sum = this.rollDice("attacker");
         let otherSum = otherHexagon.rollDice("defender");

@@ -1,8 +1,8 @@
 const Hexagon = require("./hexagon.js");
 const Player = require("./player.js");
 const Dice = require("./dice.js");
-const DIM_X = 1000;
-const DIM_Y = 1000;
+const DIM_X = 600;
+const DIM_Y = 600;
 const COLORS = ["rgb(237, 52, 86)", "rgb(255, 246, 137)", "rgb(88, 53, 94)", "rgb(122, 231, 199)"];
 
 class Game {
@@ -153,8 +153,8 @@ class Game {
         let color;
         let hexagon;
         let twoHeight = Math.sqrt((size * size) - ((size / 2) * (size / 2))) * 2;
-        for(let x = 100; x <= 700; x += 150) {
-            for(let y = 100 + twoHeight; y <= 750; y += twoHeight) {
+        for(let x = 100; x <= 400; x += 150) {
+            for(let y = 100 + twoHeight; y <= 450; y += twoHeight) {
                 color = this.colors[Math.floor(Math.random() * this.colors.length)];
                 hexagon = new Hexagon({
                     size,
@@ -167,8 +167,8 @@ class Game {
                 this.hexagons[[hexagon.gridx, hexagon.gridy]] = hexagon;
             }
         }
-        for (let x = 175; x <= 625; x += 150) {
-            for (let y = 100 + twoHeight / 2; y <= 700; y += twoHeight) {
+        for (let x = 175; x <= 475; x += 150) {
+            for (let y = 100 + twoHeight / 2; y <= 550; y += twoHeight) {
                 color = this.colors[Math.floor(Math.random() * this.colors.length)];
                 hexagon = new Hexagon({
                     size,
@@ -188,13 +188,13 @@ class Game {
     }
 
     drawTwo(ctx) {
-        ctx.moveTo(350, 25)
+        ctx.moveTo(250, 25)
         ctx.beginPath();
-        ctx.lineTo(350, 75);
-        ctx.lineTo(400, 75);
-        ctx.lineTo(400, 25);
-        ctx.lineTo(350, 25);
-        ctx.lineTo(350, 75)
+        ctx.lineTo(250, 75);
+        ctx.lineTo(300, 75);
+        ctx.lineTo(300, 25);
+        ctx.lineTo(250, 25);
+        ctx.lineTo(250, 75)
         ctx.fillStyle = this.players[0].color;
         ctx.fill();
         ctx.lineWidth = 5;
@@ -204,87 +204,7 @@ class Game {
         ctx.textBaseline = 'hanging';
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
-        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[0])}`, `${375}`, `${50 - 10}`);
-
-        ctx.moveTo(400, 25)
-        ctx.beginPath();
-        ctx.lineTo(400, 75);
-        ctx.lineTo(450, 75);
-        ctx.lineTo(450, 25);
-        ctx.lineTo(400, 25);
-        ctx.fillStyle = this.players[1].color;
-        ctx.fill();
-        ctx.font = '25px serif';
-        ctx.textBaseline = 'hanging';
-        ctx.fillStyle = "black";
-        ctx.textAlign = "center";
-        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[1])}`, `${425}`, `${50 - 10}`);
-    }
-
-    drawThree(ctx) {
-        ctx.moveTo(375, 25)
-        ctx.beginPath();
-        ctx.lineTo(375, 75);
-        ctx.lineTo(425, 75);
-        ctx.lineTo(425, 25);
-        ctx.lineTo(375, 25);
-        ctx.lineTo(375, 75);
-        ctx.fillStyle = this.players[1].color;
-        ctx.fill();
-        ctx.font = '25px serif';
-        ctx.textBaseline = 'hanging';
-        ctx.fillStyle = "black";
-        ctx.textAlign = "center";
-        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[1])}`, `${400}`, `${50 - 10}`);
-
-        ctx.moveTo(325, 25)
-        ctx.beginPath();
-        ctx.lineTo(325, 75);
-        ctx.lineTo(375, 75);
-        ctx.lineTo(375, 25);
-        ctx.lineTo(325, 25);
-        ctx.lineTo(325, 75);
-        ctx.fillStyle = this.players[0].color;
-        ctx.fill();
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = "green";
-        ctx.stroke();
-        ctx.font = '25px serif';
-        ctx.textBaseline = 'hanging';
-        ctx.fillStyle = "black";
-        ctx.textAlign = "center";
-        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[0])}`, `${350}`, `${50 - 10}`);
-
-        ctx.moveTo(425, 25)
-        ctx.beginPath();
-        ctx.lineTo(425, 75);
-        ctx.lineTo(475, 75);
-        ctx.lineTo(475, 25);
-        ctx.lineTo(425, 25);
-        ctx.fillStyle = this.players[2].color;
-        ctx.fill();
-        ctx.font = '25px serif';
-        ctx.textBaseline = 'hanging';
-        ctx.fillStyle = "black";
-        ctx.textAlign = "center";
-        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[2])}`, `${450}`, `${50 - 10}`);
-    }
-
-    drawFour(ctx) {
-        ctx.moveTo(350, 25)
-        ctx.beginPath();
-        ctx.lineTo(350, 75);
-        ctx.lineTo(400, 75);
-        ctx.lineTo(400, 25);
-        ctx.lineTo(350, 25);
-        ctx.lineTo(350, 75);
-        ctx.fillStyle = this.players[1].color;
-        ctx.fill();
-        ctx.font = '25px serif';
-        ctx.textBaseline = 'hanging';
-        ctx.fillStyle = "black";
-        ctx.textAlign = "center";
-        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[1])}`, `${375}`, `${50 - 10}`);
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[0])}`, `${275}`, `${50 - 10}`);
 
         ctx.moveTo(300, 25)
         ctx.beginPath();
@@ -292,7 +212,38 @@ class Game {
         ctx.lineTo(350, 75);
         ctx.lineTo(350, 25);
         ctx.lineTo(300, 25);
-        ctx.lineTo(300, 75);
+        ctx.fillStyle = this.players[1].color;
+        ctx.fill();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[1])}`, `${325}`, `${50 - 10}`);
+    }
+
+    drawThree(ctx) {
+        ctx.moveTo(275, 25)
+        ctx.beginPath();
+        ctx.lineTo(275, 75);
+        ctx.lineTo(325, 75);
+        ctx.lineTo(325, 25);
+        ctx.lineTo(275, 25);
+        ctx.lineTo(275, 75);
+        ctx.fillStyle = this.players[1].color;
+        ctx.fill();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[1])}`, `${300}`, `${50 - 10}`);
+
+        ctx.moveTo(225, 25)
+        ctx.beginPath();
+        ctx.lineTo(225, 75);
+        ctx.lineTo(275, 75);
+        ctx.lineTo(275, 25);
+        ctx.lineTo(225, 25);
+        ctx.lineTo(225, 75);
         ctx.fillStyle = this.players[0].color;
         ctx.fill();
         ctx.lineWidth = 5;
@@ -302,35 +253,84 @@ class Game {
         ctx.textBaseline = 'hanging';
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
-        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[0])}`, `${325}`, `${50 - 10}`);
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[0])}`, `${250}`, `${50 - 10}`);
 
-        ctx.moveTo(400, 25)
+        ctx.moveTo(325, 25)
         ctx.beginPath();
-        ctx.lineTo(400, 75);
-        ctx.lineTo(450, 75);
-        ctx.lineTo(450, 25);
-        ctx.lineTo(400, 25);
+        ctx.lineTo(325, 75);
+        ctx.lineTo(375, 75);
+        ctx.lineTo(375, 25);
+        ctx.lineTo(325, 25);
         ctx.fillStyle = this.players[2].color;
         ctx.fill();
         ctx.font = '25px serif';
         ctx.textBaseline = 'hanging';
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
-        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[2])}`, `${425}`, `${50 - 10}`);
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[2])}`, `${350}`, `${50 - 10}`);
+    }
 
-        ctx.moveTo(450, 25)
+    drawFour(ctx) {
+        ctx.moveTo(250, 25)
         ctx.beginPath();
-        ctx.lineTo(450, 75);
-        ctx.lineTo(500, 75);
-        ctx.lineTo(500, 25);
-        ctx.lineTo(450, 25);
+        ctx.lineTo(250, 75);
+        ctx.lineTo(300, 75);
+        ctx.lineTo(300, 25);
+        ctx.lineTo(250, 25);
+        ctx.lineTo(250, 75);
+        ctx.fillStyle = this.players[1].color;
+        ctx.fill();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[1])}`, `${275}`, `${50 - 10}`);
+
+        ctx.moveTo(200, 25)
+        ctx.beginPath();
+        ctx.lineTo(200, 75);
+        ctx.lineTo(250, 75);
+        ctx.lineTo(250, 25);
+        ctx.lineTo(200, 25);
+        ctx.lineTo(200, 75);
+        ctx.fillStyle = this.players[0].color;
+        ctx.fill();
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "green";
+        ctx.stroke();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[0])}`, `${225}`, `${50 - 10}`);
+
+        ctx.moveTo(300, 25)
+        ctx.beginPath();
+        ctx.lineTo(300, 75);
+        ctx.lineTo(350, 75);
+        ctx.lineTo(350, 25);
+        ctx.lineTo(300, 25);
+        ctx.fillStyle = this.players[2].color;
+        ctx.fill();
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[2])}`, `${325}`, `${50 - 10}`);
+
+        ctx.moveTo(350, 25)
+        ctx.beginPath();
+        ctx.lineTo(350, 75);
+        ctx.lineTo(400, 75);
+        ctx.lineTo(400, 25);
+        ctx.lineTo(350, 25);
         ctx.fillStyle = this.players[3].color;
         ctx.fill();
         ctx.font = '25px serif';
         ctx.textBaseline = 'hanging';
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
-        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[3])}`, `${475}`, `${50 - 10}`);
+        ctx.fillText(`${this.calculateLargestContiguousSum(this.players[3])}`, `${375}`, `${50 - 10}`);
     }
 
     draw(ctx) {

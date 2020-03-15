@@ -20,14 +20,14 @@ class GameView {
             let border1;
             let border2;
             if (this.game.players.length === 2) {
-                border1 = 350;
-                border2 = 400;
+                border1 = 250;
+                border2 = 300;
             } else if (this.game.players.length === 3) {
-                border1 = 325;
-                border2 = 375;
+                border1 = 225;
+                border2 = 275;
             } else {
-                border1 = 300;
-                border2 = 350;
+                border1 = 200;
+                border2 = 250;
             }
             const mousePos = {
                 x: e.clientX - canvas.offsetLeft,
@@ -35,7 +35,7 @@ class GameView {
             };
             const pixel = this.ctx.getImageData(mousePos.x, mousePos.y, 1, 1).data;
             const color = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
-            if (color === `rgb(0, 0, 0)`) {
+            if (color === `rgb(0, 0, 0)` || mousePos.y <= 99) {
                 this.game.draw(this.ctx);
                 this.game.clearSelected();
                 return
