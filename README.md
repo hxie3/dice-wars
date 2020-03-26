@@ -1,6 +1,6 @@
 # DiceWars
 
-[DiceWars Live](https://hxie3.github.io/dice-wars/)
+[DiceWars Live](https://hxie3.github.io/dice-wars/dist/)
 
 Instructions:
 - First choose the amount of players playing, single player is a future feature. For now, it is a hotseat 2-4 multiplayer luck-based strategy game.
