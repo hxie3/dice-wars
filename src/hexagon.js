@@ -118,6 +118,28 @@ class Hexagon {
         ctx.fillText(`${this.numOfDice}`, `${this.x}`, `${this.y-10}`);
     }
 
+    attackHighlightDraw(ctx) {
+        ctx.moveTo(this.x + this.size, 0);
+        ctx.beginPath();
+
+        for (let i = 0; i <= 6; i++) {
+            ctx.lineTo(this.x + this.size * Math.cos(i * 2 * Math.PI / 6), this.y + this.size * Math.sin(i * 2 * Math.PI / 6));
+        }
+
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "red";
+        ctx.stroke();
+        if (this.color === "transparent") return;
+        ctx.font = '25px serif';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+
+        ctx.fillText(`${this.numOfDice}`, `${this.x}`, `${this.y - 10}`);
+    }
+
     attack(otherHexagon) {
         if (this.color === otherHexagon.color) return
         if (this.numOfDice === 1) {

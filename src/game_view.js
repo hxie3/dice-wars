@@ -16,6 +16,52 @@ class GameView {
     start() {
         this.game.draw(this.ctx);
         let canvas = document.getElementById('game-canvas')
+        canvas.addEventListener("mousemove", (e) => {
+            let border1;
+            let border2;
+            if (this.game.players.length === 2) {
+                border1 = 250;
+                border2 = 300;
+            } else if (this.game.players.length === 3) {
+                border1 = 225;
+                border2 = 275;
+            } else {
+                border1 = 200;
+                border2 = 250;
+            }
+            const mousePos = {
+                x: e.clientX - canvas.offsetLeft,
+                y: e.clientY - canvas.offsetTop
+            };
+            const hexagonSelected = Util.closestHexagon(this.game.hexagons, mousePos);
+            const pixel = this.ctx.getImageData(mousePos.x, mousePos.y, 1, 1).data;
+            const color = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+            if (color === `rgb(0, 0, 0)` || mousePos.y <= 99) {
+                canvas.style.cursor = "default";
+                return
+            }
+            if (!(mousePos.x >= border1 && mousePos.x <= border2 && mousePos.y >= 25 && mousePos.y <= 75) && this.game.currentPlayer().color === hexagonSelected.color) {
+                canvas.style.cursor = "pointer";
+                return
+            }
+            const selected = Object.values(this.game.hexagons).filter(hexagon => hexagon.selected)
+            let point = false;
+            if (selected.length === 1) {
+                if (selected[0].numOfDice > 1) {
+                    selected[0].findNeighbors().forEach(pos => {
+                        let selectedNeighbor = this.game.hexagons[pos];
+                        if (hexagonSelected.gridx === selectedNeighbor.gridx && hexagonSelected.gridy === selectedNeighbor.gridy) {
+                            point = true;
+                        }
+                    })
+                }
+            }
+            if (point) {
+                canvas.style.cursor = "pointer";
+            } else {
+                canvas.style.cursor = "default";
+            }
+        })
         canvas.addEventListener("click", (e) => {
             let border1;
             let border2;
@@ -44,6 +90,14 @@ class GameView {
             if (!(mousePos.x >= border1 && mousePos.x <= border2 && mousePos.y >= 25 && mousePos.y <= 75) && this.game.currentPlayer().color === hexagonSelected.color) {
                 this.game.draw(this.ctx);
                 this.game.clearSelected();
+                if (hexagonSelected.numOfDice > 1) {
+                    hexagonSelected.findNeighbors().forEach(pos => {
+                        let selectedNeighbor = this.game.hexagons[pos];
+                        if (selectedNeighbor && selectedNeighbor.color !== hexagonSelected.color && selectedNeighbor.color !== "transparent") {
+                            selectedNeighbor.attackHighlightDraw(this.ctx);
+                        }
+                    })
+                }
                 hexagonSelected.highlightDraw(this.ctx);
             } else {
                 const playerHexagons = Object.values(this.game.hexagons).filter(hexagon => hexagon.color === this.game.players[0].color)

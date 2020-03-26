@@ -149,6 +149,16 @@ class Game {
         }
     }
 
+    ensurePlayers() {
+        let colors = []
+        Object.values(this.hexagons).forEach(hexagon => {
+            if (!colors.includes(hexagon.color)) {
+                colors.push(hexagon.color)
+            }
+        })
+        return colors.length;
+    }
+
     addHexagons(size) {
         let color;
         let hexagon;
@@ -181,7 +191,7 @@ class Game {
                 this.hexagons[[hexagon.gridx, hexagon.gridy]] = hexagon;
             }
         }
-        if (!(this.ensureNoHoles())) {
+        if (!(this.ensureNoHoles() && this.ensurePlayers() === this.players.length + 1)) {
             this.hexagons = {};
             this.addHexagons(size);
         }
