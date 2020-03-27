@@ -2,6 +2,18 @@ const Game = require("./game.js");
 const GameView = require("./game_view.js");
 
 window.addEventListener('DOMContentLoaded', (event) => {
+    let modalBackground = document.getElementById('modal-background');
+    modalBackground.addEventListener("click", e => {
+        e.preventDefault();
+        modalBackground.classList.add("hidden");
+    })
+    document.getElementById("modal-child").addEventListener('click', e => {
+        e.stopPropagation();
+    })
+    document.getElementsByClassName("instructions-ul")[0].addEventListener("click", e => {
+        e.preventDefault();
+        modalBackground.classList.remove("hidden");
+    })
     let canvas; 
     document.getElementsByClassName("two")[0].addEventListener("click", (event) => {
         document.getElementsByClassName("player-buttons")[0].classList.add("hidden");

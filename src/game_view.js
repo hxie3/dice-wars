@@ -16,6 +16,18 @@ class GameView {
     start() {
         this.game.draw(this.ctx);
         let canvas = document.getElementById('game-canvas')
+        let modalBackground = document.getElementById('modal-background');
+        modalBackground.addEventListener("click", e => {
+            e.preventDefault();
+            modalBackground.classList.add("hidden");
+        })
+        document.getElementById("modal-child").addEventListener('click', e => {
+            e.stopPropagation();
+        })
+        document.getElementsByClassName("instructions-ul")[0].addEventListener("click", e => {
+            e.preventDefault();
+            modalBackground.classList.remove("hidden");
+        })
         canvas.addEventListener("mousemove", (e) => {
             let border1;
             let border2;
@@ -50,7 +62,7 @@ class GameView {
                 if (selected[0].numOfDice > 1) {
                     selected[0].findNeighbors().forEach(pos => {
                         let selectedNeighbor = this.game.hexagons[pos];
-                        if (hexagonSelected.gridx === selectedNeighbor.gridx && hexagonSelected.gridy === selectedNeighbor.gridy) {
+                        if (selectedNeighbor && hexagonSelected.gridx === selectedNeighbor.gridx && hexagonSelected.gridy === selectedNeighbor.gridy) {
                             point = true;
                         }
                     })

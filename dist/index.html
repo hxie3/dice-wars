@@ -7,9 +7,17 @@
         <title>Document</title>
         <link rel="stylesheet" href="stylesheets/reset.css">
         <link rel="stylesheet" href="stylesheets/canvas.css">
+        <link rel="stylesheet" href="stylesheets/modal.css">
         <script src="main.js"></script>
 </head>
 <body class="body">
+    <div id="modal-background" class="hidden">
+        <div id="modal-child">
+            <div class="instruction-modal">
+
+            </div>
+        </div>
+    </div>
     <div class="title">DiceWars</div>
     <div class="game-canvas-container">
         <div class="player-buttons">
@@ -34,7 +42,7 @@
                 <audio class="fail hidden" name="media">
                     <source src="./sounds/attack_fail.wav" type="audio/wav">
                 </audio>
-                <li>Intructions</li>
+                <li class="instructions-button">Intructions</li>
                 <br>
                 <br>
                 <li class="instructions-li">
