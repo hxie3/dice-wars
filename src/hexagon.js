@@ -112,7 +112,7 @@ class Hexagon {
         if (this.color === "transparent") return;
         ctx.font = '25px serif';
         ctx.textBaseline = 'hanging';
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "rgb(0, 0, 10)";
         ctx.textAlign = "center";
 
         ctx.fillText(`${this.numOfDice}`, `${this.x}`, `${this.y-10}`);
@@ -134,7 +134,7 @@ class Hexagon {
         if (this.color === "transparent") return;
         ctx.font = '25px serif';
         ctx.textBaseline = 'hanging';
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "rgb(0, 0, 10)";
         ctx.textAlign = "center";
 
         ctx.fillText(`${this.numOfDice}`, `${this.x}`, `${this.y - 10}`);

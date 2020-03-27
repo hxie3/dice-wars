@@ -16,18 +16,6 @@ class GameView {
     start() {
         this.game.draw(this.ctx);
         let canvas = document.getElementById('game-canvas')
-        let modalBackground = document.getElementById('modal-background');
-        modalBackground.addEventListener("click", e => {
-            e.preventDefault();
-            modalBackground.classList.add("hidden");
-        })
-        document.getElementById("modal-child").addEventListener('click', e => {
-            e.stopPropagation();
-        })
-        document.getElementsByClassName("instructions-ul")[0].addEventListener("click", e => {
-            e.preventDefault();
-            modalBackground.classList.remove("hidden");
-        })
         canvas.addEventListener("mousemove", (e) => {
             let border1;
             let border2;
@@ -50,6 +38,10 @@ class GameView {
             const color = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
             if (color === `rgb(0, 0, 0)` || mousePos.y <= 99) {
                 canvas.style.cursor = "default";
+                return
+            }
+            if (mousePos.x >= 270 && mousePos.x <= 330 && mousePos.y >= 550 && mousePos.y <= 580) {
+                canvas.style.cursor = "pointer";
                 return
             }
             if (!(mousePos.x >= border1 && mousePos.x <= border2 && mousePos.y >= 25 && mousePos.y <= 75) && this.game.currentPlayer().color === hexagonSelected.color) {
@@ -96,6 +88,10 @@ class GameView {
             if (color === `rgb(0, 0, 0)` || mousePos.y <= 99) {
                 this.game.draw(this.ctx);
                 this.game.clearSelected();
+                return
+            }
+            if (mousePos.x >= 270 && mousePos.x <= 330 && mousePos.y >= 550 && mousePos.y <= 580) {
+                this.game.endButtonListener();
                 return
             }
             const hexagonSelected = Util.closestHexagon(this.game.hexagons, mousePos);
