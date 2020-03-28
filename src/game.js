@@ -382,9 +382,12 @@ class Game {
         } else {
             color = "Blue";
         }
-        if(!alert(`${color} wins! Play again?`)) {
-            window.location.reload();
-        }
+        let winMessage = document.getElementsByClassName("win-message-content")[0];
+        winMessage.innerHTML = `${color} wins! Play again?`;
+        document.getElementById("win-background").classList.remove("hidden");
+        // if(!alert(`${color} wins! Play again?`)) {
+        //     window.location.reload();
+        // }
     }
 }
 

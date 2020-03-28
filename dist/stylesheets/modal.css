@@ -15,8 +15,44 @@
     transform: translate(-50%, -50%);
 }
 
-.instruction-modal {
-    width: 100px;
+#win-background {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: transparent;
+    z-index: 3000;
+}
+
+#win-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.win-message {
+    width: 300px;
     height: 100px;
-    background-color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+}
+
+.instruction-modal {
+    background-color: transparent;
+    border-radius: 50px;
+}
+
+.instruction-modal-image {
+    border-radius: 50px;
+}
+
+.legend {
+    align-self: center;
 }

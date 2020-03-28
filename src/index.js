@@ -2,6 +2,14 @@ const Game = require("./game.js");
 const GameView = require("./game_view.js");
 
 window.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementsByClassName("play-again")[0].addEventListener("click", e => {
+        e.preventDefault();
+        window.location.reload();
+    })
+    document.getElementsByClassName("not-again")[0].addEventListener("click", e => {
+        e.preventDefault();
+        document.getElementById("win-background").classList.add("hidden");
+    })
     let modalBackground = document.getElementById('modal-background');
     modalBackground.addEventListener("click", e => {
         e.preventDefault();
@@ -10,7 +18,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById("modal-child").addEventListener('click', e => {
         e.stopPropagation();
     })
-    document.getElementsByClassName("instructions-ul")[0].addEventListener("click", e => {
+    document.getElementsByClassName("legend")[0].addEventListener("click", e => {
         e.preventDefault();
         modalBackground.classList.remove("hidden");
     })

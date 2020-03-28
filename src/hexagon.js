@@ -152,6 +152,9 @@ class Hexagon {
         let otherSum = otherHexagon.rollDice("defender");
         document.getElementsByClassName("sum")[0].innerHTML = sum;
         document.getElementsByClassName("sum")[1].innerHTML = otherSum;
+        // testing purposes
+        // sum = 2;
+        // otherSum = 1;
         if (sum > otherSum) {
             let promise = document.getElementsByClassName("success")[0].cloneNode(true).play();
             if (typeof promise !== undefined) {
