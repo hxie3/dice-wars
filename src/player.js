@@ -1,5 +1,6 @@
 class Player {
-    constructor(color) {
+    constructor(color, computer) {
+        this.computer = computer;
         this.color = color;
     }
 }

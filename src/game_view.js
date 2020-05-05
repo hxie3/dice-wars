@@ -6,17 +6,23 @@ class GameView {
         this.game = new Game({
             size: object.size,
             players: object.players,
+            computer: object.computer,
             ctx: object.ctx
         });
+        this.computer = object.computer;
         this.size = object.size;
-        this.players = object.players
+        this.players = object.players;
         this.ctx = object.ctx;
     }
 
     start() {
         this.game.draw(this.ctx);
-        let canvas = document.getElementById('game-canvas')
+        let canvas = document.getElementById('game-canvas');
         canvas.addEventListener("mousemove", (e) => {
+            if(this.game.currentPlayer().computer) {
+                canvas.style.cursor = "default";
+                return;
+            }
             let border1;
             let border2;
             if (this.game.players.length === 2) {
@@ -67,6 +73,9 @@ class GameView {
             }
         })
         canvas.addEventListener("click", (e) => {
+            if (this.game.currentPlayer().computer) {
+                return;
+            }
             let border1;
             let border2;
             if (this.game.players.length === 2) {

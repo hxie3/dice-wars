@@ -22,7 +22,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
         e.preventDefault();
         modalBackground.classList.remove("hidden");
     })
-    let canvas; 
+    let canvas;
+    document.getElementsByClassName("one")[0].addEventListener("click", (event) => {
+        document.getElementsByClassName("player-buttons")[0].classList.add("hidden");
+        canvas = document.getElementById('game-canvas')
+        canvas.classList.add("active")
+        let ctx = canvas.getContext('2d');
+        let gameview = new GameView({
+            size: 50,
+            players: 4,
+            computer: true,
+            ctx,
+        });
+        gameview.start();
+    })
     document.getElementsByClassName("two")[0].addEventListener("click", (event) => {
         document.getElementsByClassName("player-buttons")[0].classList.add("hidden");
         canvas = document.getElementById('game-canvas')
@@ -31,6 +44,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         let gameview = new GameView({
             size: 50,
             players: 2,
+            computer: false,
             ctx
         });
         gameview.start();
@@ -43,6 +57,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         let gameview = new GameView({
             size: 50,
             players: 3,
+            computer: false,
             ctx
         });
         gameview.start();
@@ -55,6 +70,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         let gameview = new GameView({
             size: 50,
             players: 4,
+            computer: false,
             ctx
         });
         gameview.start();

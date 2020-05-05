@@ -7,6 +7,7 @@ const COLORS = ["rgb(237, 52, 86)", "rgb(255, 246, 137)", "rgb(88, 53, 94)", "rg
 
 class Game {
     constructor(object) {
+        this.computer = object.computer;
         this.players = [];
         this.addPlayers(object.players);
         this.colors = COLORS.slice(0, this.players.length);
@@ -106,13 +107,78 @@ class Game {
         while (numOfDiceToAdd > 0 && ownedHexagons.length !== 0) {
             ownedHexagons = ownedHexagons.filter(hexagon => hexagon.dices.length < 10);
             randomHexagon = ownedHexagons[Math.floor(Math.random() * ownedHexagons.length)]
-            if (randomHexagon === undefined) return
-            randomHexagon.dices.push(new Dice());
-            randomHexagon.numOfDice += 1;
-            numOfDiceToAdd -= 1;
+            if (randomHexagon === undefined) {
+                numOfDiceToAdd = 0;
+            } else {
+                randomHexagon.dices.push(new Dice());
+                randomHexagon.numOfDice += 1;
+                numOfDiceToAdd -= 1;
+            }
         }
         this.nextPlayer();
-        this.draw(this.ctx)
+        if(this.currentPlayer().computer) {
+            let nextPlayerHexagons = Object.values(this.hexagons).filter(hexagon => (
+                hexagon.color === this.currentPlayer().color && hexagon.numOfDice > 1
+            ));
+            if (nextPlayerHexagons.length === 0) {
+                this.endButtonListener();
+            } else {
+                let randomNextPlayerHexagon = nextPlayerHexagons[Math.floor(Math.random() * nextPlayerHexagons.length)];
+                this.draw(this.ctx);
+                let potentialAttacks = [];
+                let randomPotentialAttacks;
+                setTimeout(() => {
+                    randomNextPlayerHexagon.findNeighbors().forEach(pos => {
+                        let selectedNeighbor = this.hexagons[pos];
+                        if (selectedNeighbor && selectedNeighbor.color !== randomNextPlayerHexagon.color && selectedNeighbor.color !== "transparent") {
+                            potentialAttacks.push(selectedNeighbor);
+                        }
+                    })
+                    if (potentialAttacks.length === 0) {
+                        let i = 0;
+                        while (i < 100) {
+                            randomNextPlayerHexagon = nextPlayerHexagons[Math.floor(Math.random() * nextPlayerHexagons.length)];
+                            randomNextPlayerHexagon.findNeighbors().forEach(pos => {
+                                let selectedNeighbor = this.hexagons[pos];
+                                if (selectedNeighbor && selectedNeighbor.color !== randomNextPlayerHexagon.color && selectedNeighbor.color !== "transparent") {
+                                    potentialAttacks.push(selectedNeighbor);
+                                }
+                            })
+                            if (potentialAttacks.length === 0) {
+                                i++;
+                            } else {
+                                i = 100;
+                            }
+                            if (i === 99) {
+                                setTimeout(() => {
+                                    this.endButtonListener();
+                                }, 500)
+                            }
+                        }
+                    }
+                    randomPotentialAttacks = potentialAttacks[Math.floor(Math.random() * potentialAttacks.length)];
+                    randomNextPlayerHexagon.highlightDraw(this.ctx);
+                    setTimeout(() => {
+                        randomPotentialAttacks.attackHighlightDraw(this.ctx);
+                        randomNextPlayerHexagon.highlightDraw(this.ctx);
+                        setTimeout(() => {
+                            randomNextPlayerHexagon.attack(randomPotentialAttacks);
+                            this.checkForElimination();
+                            this.draw(this.ctx);
+                            if (this.players.length === 1) {
+                                setTimeout(() => this.game.win(this.game.players[0]), 50);
+                            } else {
+                                setTimeout(() => {
+                                    this.endButtonListener();
+                                }, 500)
+                            }
+                        }, 500)
+                    }, 500)
+                }, 500)
+            }
+        } else {
+            this.draw(this.ctx)
+        }
     }
 
     clearSelected() {
@@ -142,7 +208,11 @@ class Game {
 
     addPlayers(num) {
         for (let i = 0; i < num; i++) {
-            this.players.push(new Player(COLORS[i]))
+            if (this.computer && (i !== 0)) {
+                this.players.push(new Player(COLORS[i], true));
+            } else {
+                this.players.push(new Player(COLORS[i], false));
+            }
         }
     }
 
