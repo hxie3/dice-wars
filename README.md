@@ -2,6 +2,8 @@
 
 [DiceWars Live](https://hxie3.github.io/dice-wars/dist/)
 
+![DiceWars](https://github.com/hxie3/dice-wars/blob/master/dist/images/dicewars.gif)
+
 Instructions:
 - First choose the amount of players playing, single player is a future feature. For now, it is a hotseat 2-4 multiplayer luck-based strategy game.
 - At the top of the board you'll see a queue of colors. The player highlighted in green is the current player's turn. Inside of each player's color is a number representing the largest contiguous sequence of territory that player controls.
