@@ -86,7 +86,7 @@
     background-color: burlywood;
 }
 
-.end-button-container {
+/* .end-button-container {
     position: relative;
     right: 345px;
     top: 345px;
@@ -105,7 +105,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .active {
     display: block !important;
