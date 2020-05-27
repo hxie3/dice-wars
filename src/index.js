@@ -11,9 +11,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById("win-background").classList.add("hidden");
     })
     let modalBackground = document.getElementById('modal-background');
+    let instructions = document.getElementsByClassName('instruction-modal-image')[0];
+    let tutorial = document.getElementsByClassName('tutorial-video')[0];
     modalBackground.addEventListener("click", e => {
         e.preventDefault();
         modalBackground.classList.add("hidden");
+        instructions.classList.add("hidden");
+        tutorial.classList.add("hidden");
+        tutorial.pause();
     })
     document.getElementById("modal-child").addEventListener('click', e => {
         e.stopPropagation();
@@ -21,6 +26,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
     document.getElementsByClassName("legend")[0].addEventListener("click", e => {
         e.preventDefault();
         modalBackground.classList.remove("hidden");
+        instructions.classList.remove("hidden");
+    })
+    document.getElementsByClassName("tutorial")[0].addEventListener("click", e => {
+        e.preventDefault();
+        modalBackground.classList.remove("hidden");
+        tutorial.currentTime=0.1;
+        tutorial.classList.remove("hidden");
     })
     let canvas;
     document.getElementsByClassName("one")[0].addEventListener("click", (event) => {
