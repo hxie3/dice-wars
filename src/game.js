@@ -100,6 +100,98 @@ class Game {
         return largestSum;
     }
 
+    automaticTurn() {
+        let nextPlayerHexagons;
+        let randomNextPlayerHexagon;
+        let randomPotentialAttacks;
+        let selectedNeighbor;
+        let i;
+        let j = 0;
+        let res = false;
+        nextPlayerHexagons = Object.values(this.hexagons).filter(hexagon => (
+            hexagon.color === this.currentPlayer().color && hexagon.numOfDice > 1
+        ));
+        // nextPlayerHexagons is an array containing all hexagons of their color with values greater than 2.
+        if (nextPlayerHexagons.length === 0) {
+            setTimeout(() => {
+                this.endButtonListener();
+            }, 500)
+            // if none exist, an automatic attack is not possible, so the computer's turn ends
+        } else {
+            randomNextPlayerHexagon = nextPlayerHexagons[Math.floor(Math.random() * nextPlayerHexagons.length)];
+            // grabs a random hexagon from nextPlayerHexagons
+            this.draw(this.ctx);
+            let potentialAttacks = [];
+            randomNextPlayerHexagon.findNeighbors().forEach(pos => {
+                selectedNeighbor = this.hexagons[pos];
+                // grabs all the positions of the neighbors, assigns it to a variable
+                if (selectedNeighbor && selectedNeighbor.color !== randomNextPlayerHexagon.color && selectedNeighbor.color !== "transparent") {
+                    // if the neighbor is within bounds && neighbor is not their color && it is not an empty spot
+                    potentialAttacks.push(selectedNeighbor);
+                    // if it meets above cond. store into potential attacks
+                }
+            })
+            if (potentialAttacks.length === 0) {
+                // if the current hexagon doesnt have a potential attack, try a different owned hexagon 100x
+                i = 0;
+                while (i < 100) {
+                    randomNextPlayerHexagon = nextPlayerHexagons[Math.floor(Math.random() * nextPlayerHexagons.length)];
+                    randomNextPlayerHexagon.findNeighbors().forEach(pos => {
+                        selectedNeighbor = this.hexagons[pos];
+                        if (selectedNeighbor && selectedNeighbor.color !== randomNextPlayerHexagon.color && selectedNeighbor.color !== "transparent") {
+                            potentialAttacks.push(selectedNeighbor);
+                        }
+                    })
+                    if (potentialAttacks.length === 0) {
+                        i++;
+                    } else {
+                        i = 100;
+                    }
+                    if (i === 99) {
+                        setTimeout(() => {
+                            this.endButtonListener();
+                        }, 500)
+                    }
+                }
+            }
+            if (potentialAttacks.length !== 0) {
+                // if a hexagon can be attacked
+                randomPotentialAttacks = potentialAttacks[Math.floor(Math.random() * potentialAttacks.length)];
+                // set a var to a random hexagon that can be attacked
+                setTimeout(() => {
+                    randomNextPlayerHexagon.highlightDraw(this.ctx);
+                    // highlight the selected hexagon
+                    setTimeout(() => {
+                        randomPotentialAttacks.attackHighlightDraw(this.ctx);
+                        // highlight the attacked hexagon
+                        randomNextPlayerHexagon.highlightDraw(this.ctx);
+                        // rehighlight selected to make green border in the middle
+                        setTimeout(() => {
+                            randomNextPlayerHexagon.attack(randomPotentialAttacks);
+                            // hexagon attack
+                            res = true;
+                            this.checkForElimination();
+                            this.draw(this.ctx);
+                            if (this.players.length === 1) {
+                                setTimeout(() => this.win(this.players[0]), 50);
+                            } else {
+                                if (j === 10) {
+                                    setTimeout(() => {
+                                        this.endButtonListener();
+                                    }, 500)
+                                } else {
+                                    j += 1;
+                                    this.automaticTurn();
+                                }
+                            }
+                        }, 500)
+                    }, 500)
+                }, 500)
+            }
+        }
+        return res;
+    }
+
     endButtonListener() {
         let numOfDiceToAdd = this.calculateLargestContiguousSum(this.currentPlayer());
         let ownedHexagons = Object.values(this.hexagons).filter(hexagon => hexagon.color === this.currentPlayer().color && hexagon.dices.length < 10);
@@ -117,125 +209,7 @@ class Game {
         }
         this.nextPlayer();
         if(this.currentPlayer().computer) {
-            let nextPlayerHexagons = Object.values(this.hexagons).filter(hexagon => (
-                hexagon.color === this.currentPlayer().color && hexagon.numOfDice > 1
-            ));
-            if (nextPlayerHexagons.length === 0) {
-                this.endButtonListener();
-            } else {
-                let randomNextPlayerHexagon = nextPlayerHexagons[Math.floor(Math.random() * nextPlayerHexagons.length)];
-                this.draw(this.ctx);
-                let potentialAttacks = [];
-                let randomPotentialAttacks;
-                randomNextPlayerHexagon.findNeighbors().forEach(pos => {
-                    let selectedNeighbor = this.hexagons[pos];
-                    if (selectedNeighbor && selectedNeighbor.color !== randomNextPlayerHexagon.color && selectedNeighbor.color !== "transparent") {
-                        potentialAttacks.push(selectedNeighbor);
-                    }
-                })
-                if (potentialAttacks.length === 0) {
-                    let i = 0;
-                    while (i < 100) {
-                        randomNextPlayerHexagon = nextPlayerHexagons[Math.floor(Math.random() * nextPlayerHexagons.length)];
-                        randomNextPlayerHexagon.findNeighbors().forEach(pos => {
-                            let selectedNeighbor = this.hexagons[pos];
-                            if (selectedNeighbor && selectedNeighbor.color !== randomNextPlayerHexagon.color && selectedNeighbor.color !== "transparent") {
-                                potentialAttacks.push(selectedNeighbor);
-                            }
-                        })
-                        if (potentialAttacks.length === 0) {
-                            i++;
-                        } else {
-                            i = 100;
-                        }
-                        if (i === 99) {
-                            setTimeout(() => {
-                                this.endButtonListener();
-                            }, 500)
-                        }
-                    }
-                }
-                if (potentialAttacks.length !== 0) {
-                    randomPotentialAttacks = potentialAttacks[Math.floor(Math.random() * potentialAttacks.length)];
-                    setTimeout(() => {
-                        randomNextPlayerHexagon.highlightDraw(this.ctx);
-                        setTimeout(() => {
-                            randomPotentialAttacks.attackHighlightDraw(this.ctx);
-                            randomNextPlayerHexagon.highlightDraw(this.ctx);
-                            setTimeout(() => {
-                                randomNextPlayerHexagon.attack(randomPotentialAttacks);
-                                this.checkForElimination();
-                                this.draw(this.ctx);
-                                if (this.players.length === 1) {
-                                    setTimeout(() => this.win(this.players[0]), 50);
-                                } else {
-                                    nextPlayerHexagons = Object.values(this.hexagons).filter(hexagon => (
-                                        hexagon.color === this.currentPlayer().color && hexagon.numOfDice > 1
-                                    ));
-                                    if (nextPlayerHexagons.length === 0) {
-                                        this.endButtonListener();
-                                    } else {
-                                        let randomNextPlayerHexagon = nextPlayerHexagons[Math.floor(Math.random() * nextPlayerHexagons.length)];
-                                        this.draw(this.ctx);
-                                        let potentialAttacks = [];
-                                        let randomPotentialAttacks;
-                                        randomNextPlayerHexagon.findNeighbors().forEach(pos => {
-                                            let selectedNeighbor = this.hexagons[pos];
-                                            if (selectedNeighbor && selectedNeighbor.color !== randomNextPlayerHexagon.color && selectedNeighbor.color !== "transparent") {
-                                                potentialAttacks.push(selectedNeighbor);
-                                            }
-                                        })
-                                        if (potentialAttacks.length === 0) {
-                                            let i = 0;
-                                            while (i < 100) {
-                                                randomNextPlayerHexagon = nextPlayerHexagons[Math.floor(Math.random() * nextPlayerHexagons.length)];
-                                                randomNextPlayerHexagon.findNeighbors().forEach(pos => {
-                                                    let selectedNeighbor = this.hexagons[pos];
-                                                    if (selectedNeighbor && selectedNeighbor.color !== randomNextPlayerHexagon.color && selectedNeighbor.color !== "transparent") {
-                                                        potentialAttacks.push(selectedNeighbor);
-                                                    }
-                                                })
-                                                if (potentialAttacks.length === 0) {
-                                                    i++;
-                                                } else {
-                                                    i = 100;
-                                                }
-                                                if (i === 99) {
-                                                    setTimeout(() => {
-                                                        this.endButtonListener();
-                                                    }, 500)
-                                                }
-                                            }
-                                        }
-                                        if (potentialAttacks.length !== 0) {
-                                            randomPotentialAttacks = potentialAttacks[Math.floor(Math.random() * potentialAttacks.length)];
-                                            setTimeout(() => {
-                                                randomNextPlayerHexagon.highlightDraw(this.ctx);
-                                                setTimeout(() => {
-                                                    randomPotentialAttacks.attackHighlightDraw(this.ctx);
-                                                    randomNextPlayerHexagon.highlightDraw(this.ctx);
-                                                    setTimeout(() => {
-                                                        randomNextPlayerHexagon.attack(randomPotentialAttacks);
-                                                        this.checkForElimination();
-                                                        this.draw(this.ctx);
-                                                        if (this.players.length === 1) {
-                                                            setTimeout(() => this.win(this.players[0]), 50);
-                                                        } else {
-                                                            setTimeout(() => {
-                                                                this.endButtonListener();
-                                                            }, 500)
-                                                        }
-                                                    }, 500)
-                                                }, 500)
-                                            }, 500)
-                                        }
-                                    }
-                                }
-                            }, 500)
-                        }, 500)
-                    }, 500)
-                }
-            }
+            this.automaticTurn();
         } else {
             this.draw(this.ctx)
         }
